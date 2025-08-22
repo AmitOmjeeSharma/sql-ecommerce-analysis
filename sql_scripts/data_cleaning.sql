@@ -57,6 +57,9 @@ WHERE Price <= 0;
 SELECT MIN(InvoiceDate) AS EarliestDate, MAX(InvoiceDate) AS LatestDate 
 FROM OnlineRetail_2009;
 
+SELECT MIN(InvoiceDate) AS EarliestDate, MAX(InvoiceDate) AS LatestDate 
+FROM OnlineRetail_2010;
+
 -- 8. Empty Descriptions
 SELECT COUNT(*) AS EmptyDescriptions_2009
 FROM OnlineRetail_2009
@@ -67,10 +70,19 @@ FROM OnlineRetail_2010
 WHERE Description = '' OR Description IS NULL;
 
 -- 9. Country Values
-SELECT DISTINCT Country FROM OnlineRetail_2010 ORDER BY Country;
-SELECT DISTINCT Country FROM OnlineRetail_2009 ORDER BY Country;
+SELECT count(DISTINCT Country) as Total_country_2009  FROM OnlineRetail_2009 ORDER BY Country;
+SELECT count( DISTINCT Country) as Total_country_2010 FROM OnlineRetail_2010 ORDER BY Country;
 
--- 10. Outlier Prices
+-- 10. Missing Countries
+SELECT DISTINCT Country, 'Only in 2009' AS source
+FROM OnlineRetail_2009
+WHERE Country NOT IN (SELECT DISTINCT Country FROM OnlineRetail_2010)
+UNION
+SELECT DISTINCT Country, 'Only in 2010' AS source
+FROM OnlineRetail_2010
+WHERE Country NOT IN (SELECT DISTINCT Country FROM OnlineRetail_2009);
+
+-- 11. Outlier Prices
 SELECT MAX(Price) AS MaxPrice_2009, MIN(Price) AS MinPrice_2009 
 FROM OnlineRetail_2009;
 
