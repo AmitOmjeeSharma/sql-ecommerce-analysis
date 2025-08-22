@@ -60,7 +60,7 @@ README.md → Project overview
 
 ---
 
-## 🚀 Next Steps
+## 🚀 Next Steps (WIP)
 - Build **interactive dashboards** in Power BI for stakeholder reporting  
 
 ---
